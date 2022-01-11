@@ -19,30 +19,75 @@
 <body>
     <!-- Start your project here-->
     <div class="container pt-5">
-        <div class="d-flex justify-content-center align-items-center pt-5">
-            <div class="">
-                <div class="text-center">
-                    <img class="mb-4" src="https://mdbootstrap.com/img/logo/mdb-transparent-250px.png" style="width: 180px;" />
-                </div>
-                <h5 class="mb-3">This is MDB Free</h5>
+        <h1> hello </h1>
 
-                <p>We hope it exceeds your expectations.<br> 1. Please report all bugs on our <a href="https://mdbootstrap.com/support/cat/standard/">support forum</a><br> 2. Help us improve with a <a href="https://forms.gle/RDgpTr9z5SAx2Y5w9">4 minute feedback survey</a><br>                    3. Access MDB GO for <a href="https://mdbootstrap.com/docs/standard/cli/">free hosting & deployment</a><br>
-                </p>
-                <p>Keep coding,<br> MDB Team</p>
-                <hr>
-                <a class="btn btn-primary btn-lg btn-block" href="https://mdbootstrap.com/docs/standard/getting-started/" target="_blank" role="button">Start with MDB tutorials</a>
-                <a class="btn btn-primary btn-lg btn-block" href="https://mdbootstrap.com/docs/standard/cli/" target="_blank" role="button">Start with backend template</a>
-                <p class="mt-3 text-center mb-0">PS. Free users get PRO cheaper</p>
-                <a class="btn btn-danger btn-lg btn-block" href="https://mdbootstrap.com/sale/unique/" target="_blank" role="button">UPGRADE WITH DISCOUNT</a>
+        <div class="row">
+
+            <div class="col-md-8 mb-4 mb-md-0">
+                <img src="" class="w-100" alt="" id="wrapper-url">
+
             </div>
+
+            <div class="col-md-4 mb-4 mb-md-0">
+
+                <h5 id="wrapper-title"></h5>
+                <p class="mb-2 text-muted">Copyright : <span id="wrapper-copyright"></span></p>
+                <p id="wrapper-explanation"></p>
+
+
+            </div>
+
         </div>
+
+
+
     </div>
     <!-- End your project here-->
 
     <!-- MDB -->
     <script type="text/javascript" src="js/mdb.min.js"></script>
     <!-- Custom scripts -->
-    <script type="text/javascript"></script>
+    <script type="text/javascript">
+        //https: //api.nasa.gov/planetary/apod?api_key=fi6G116kWiLzYJKgqCv6Rv3N1oltaoVN8NHw6Iss
+        let xml = new XMLHttpRequest();
+        xml.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                let data = JSON.parse(this.responseText);
+
+                let copyright = data["copyright"];
+                let date = data["date"];
+                let explanation = data["explanation"];
+                let hdurl = data["hdurl"];
+                let media_type = data["media_type"];
+                let title = data["title"];
+                let url = data["url"];
+                console.log(copyright);
+                console.log(date);
+                console.log(explanation);
+                console.log(hdurl);
+                console.log(media_type);
+                console.log(title);
+                console.log(url);
+
+                document.getElementById("wrapper-url").src = url;
+                document.getElementById("wrapper-title").innerHTML = title
+                document.getElementById("wrapper-copyright").innerHTML = copyright;
+                document.getElementById("wrapper-explanation").innerHTML = explanation;
+
+
+
+            }
+        }
+
+
+        let qUrl = "https://api.nasa.gov/planetary/apod?"
+        let qKey = "api_key=fi6G116kWiLzYJKgqCv6Rv3N1oltaoVN8NHw6Iss"
+        let qUrlfull = "https://api.nasa.gov/planetary/apod?api_key=fi6G116kWiLzYJKgqCv6Rv3N1oltaoVN8NHw6Iss"
+
+        xml.open("GET", qUrlfull, true);
+        xml.send();
+        // end of script
+    </script>
 </body>
 
 </html>
