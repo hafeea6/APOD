@@ -30,6 +30,7 @@
             <div class="col-md-8 mb-4 mb-md-0">
                 <section id="wrapper-media">
 
+
                 </section>
 
 
@@ -133,13 +134,17 @@
 
 
         }
-        var myDatepicker = document.getElementById('date-picker')
-        myDatepicker.addEventListener('dateChange.mdb.datepicker', function(e) {
+        var myDatepicker = document.getElementById('wrapper-date')
+        myDatepicker.addEventListener('input', function(e) {
             nasaRequest();
+            console.log("yay")
+
 
         });
+        nasaRequest().onload
 
-        nasaRequest().onload;
+
+        ;
 
         // end of script
     </script>
