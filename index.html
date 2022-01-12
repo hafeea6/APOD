@@ -21,6 +21,7 @@
     <div class="container my-5">
         <h1 class="text-center" style="color:blue"> NASA API </h1>
 
+
         <div id="date-picker" class="form-outline datepicker mb-4">
             <input type="date" class="form-control" id="wrapper-date">
             <label for="wrapper-date" class="form-label">Select a date</label>
@@ -29,6 +30,8 @@
 
             <div class="col-md-8 mb-4 mb-md-0">
                 <section id="wrapper-media">
+
+
 
 
                 </section>
@@ -41,8 +44,14 @@
 
             <div class="col-md-4 mb-4 mb-md-0">
 
+
+
                 <h5 id="wrapper-title"></h5>
                 <p class="mb-2 text-muted">Copyright : <span id="wrapper-copyright"></span></p>
+                <div id="button">
+                    <i onclick="Toggle()" id="wrapper-button" class="far fa-heart"></i>
+                </div>
+
                 <p id="wrapper-explanation"></p>
 
 
@@ -134,11 +143,29 @@
 
 
         }
+        let button = document.getElementById('wrapper-button');
+
+        function Toggle() {
+            if (button.classList.contains("far")) {
+                button.classList.remove("far");
+                button.classList.add("fas")
+            } else {
+                button.classList.remove("fas");
+                button.classList.add("far");
+            }
+        }
+
+        function Reset() {
+            if (button.classList.contains("fas")) {
+                button.classList.remove("fas");
+                button.classList.add("far")
+            }
+        }
+
         var myDatepicker = document.getElementById('wrapper-date')
         myDatepicker.addEventListener('input', function(e) {
             nasaRequest();
-            console.log("yay")
-
+            Reset();
 
         });
         nasaRequest().onload
