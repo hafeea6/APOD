@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Material Design for Bootstrap</title>
+    <!-- MDB icon -->
+    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+    <!-- MDB -->
+    <link rel="stylesheet" href="css/mdb.min.css" />
+</head>
+
+<body>
+    <!-- Start your project here-->
+    <div class="container my-5">
+        <h1 class="text-center" style="color:blue"> NASA API </h1>
+
+
+        <div id="date-picker" class="form-outline datepicker mb-4">
+            <input type="date" class="form-control" id="wrapper-date">
+            <label for="wrapper-date" class="form-label">Select a date</label>
+        </div>
+        <div class="row">
+
+            <div class="col-md-8 mb-4 mb-md-0">
+                <section id="wrapper-media">
+
+
+
+
+                </section>
+
+
+
+
+
+            </div>
+
+            <div class="col-md-4 mb-4 mb-md-0">
+
+
+
+                <h5 id="wrapper-title"></h5>
+                <p class="mb-2 text-muted">Copyright : <span id="wrapper-copyright"></span></p>
+                <div id="button">
+                    <i onclick="Toggle()" id="wrapper-button" class="far fa-heart"></i>
+                </div>
+
+                <p id="wrapper-explanation"></p>
+
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+    <!-- End your project here-->
+
+    <!-- MDB -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+    <!-- Custom scripts -->
+    <script type="text/javascript">
+        function nasaRequest() {
+            //https: //api.nasa.gov/planetary/apod?api_key=fi6G116kWiLzYJKgqCv6Rv3N1oltaoVN8NHw6Iss
+
+            let xml = new XMLHttpRequest();
+            xml.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    let data = JSON.parse(this.responseText);
+
+                    let copyright = data["copyright"];
+                    let date = data["date"];
+                    let explanation = data["explanation"];
+                    let hdurl = data["hdurl"];
+                    let media_type = data["media_type"];
+                    let title = data["title"];
+                    let url = data["url"];
+                    let imageType = `
+                <div class="bg-image hover-overlay ripple shadow-1-strong rounded" data-mdb-ripple-color="light">
+                    <img id="wrapper-image" src="" class="w-100" alt="Louvre" />
+                    <a id="wrapper-hdurl" href="" target="_blank">
+                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+                    </a>
+                </div>
+                `;
+                    let vidType = `
+                    <div class="ratio ratio-16x9">
+                        <iframe
+                            id="wrapper-video"
+                            src="https://www.youtube.com/embed/vlDzYIIOYmM"
+                            title="YouTube video"
+                            allowfullscreen
+                        ></iframe>
+                    </div>
+                
+                `;
+                    console.log(copyright);
+                    console.log(date);
+                    console.log(explanation);
+                    console.log(hdurl);
+                    console.log(media_type);
+                    console.log(title);
+                    console.log(url);
+
+                    document.getElementById("wrapper-title").innerHTML = title
+                    document.getElementById("wrapper-copyright").innerHTML = copyright;
+                    document.getElementById("wrapper-explanation").innerHTML = explanation;
+
+
+                    if (media_type === "image") {
+                        document.getElementById("wrapper-media").innerHTML = imageType;
+                        document.getElementById("wrapper-image").src = url;
+                        document.getElementById("wrapper-hdurl").href = hdurl;
+
+
+                    } else {
+                        document.getElementById("wrapper-media").innerHTML = vidType;
+                        document.getElementById("wrapper-video").src = url;
+                    }
+
+                }
+            }
+
+            let datepicker_date = document.getElementById("wrapper-date").value;
+            let qUrl = "https://api.nasa.gov/planetary/apod?"
+            let qKey = "api_key=fi6G116kWiLzYJKgqCv6Rv3N1oltaoVN8NHw6Iss"
+            let qDate = "&" + "date=" + datepicker_date;
+            //let qUrlfull = "https://api.nasa.gov/planetary/apod?api_key=fi6G116kWiLzYJKgqCv6Rv3N1oltaoVN8NHw6Iss"
+            let qUrlfull = qUrl + qKey + qDate
+
+
+
+            xml.open("GET", qUrlfull, true);
+            xml.send();
+
+
+        }
+        let button = document.getElementById('wrapper-button');
+
+        function Toggle() {
+            if (button.classList.contains("far")) {
+                button.classList.remove("far");
+                button.classList.add("fas")
+            } else {
+                button.classList.remove("fas");
+                button.classList.add("far");
+            }
+        }
+
+        function Reset() {
+            if (button.classList.contains("fas")) {
+                button.classList.remove("fas");
+                button.classList.add("far")
+            }
+        }
+
+        var myDatepicker = document.getElementById('wrapper-date')
+        myDatepicker.addEventListener('input', function(e) {
+            nasaRequest();
+            Reset();
+
+        });
+        nasaRequest().onload
+
+
+        ;
+
+        // end of script
+    </script>
+</body>
+
+</html>
